@@ -1,0 +1,66 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* make sizing predictable and ensure app full-height */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#__next {
+  height: 100%;
+}
+
+/* Excel-like feel */
+table {
+  border-collapse: collapse;
+  width: 100%;
+  table-layout: fixed; /* enables text-overflow on cells */
+}
+
+th,
+td {
+  border: 1px solid rgba(203, 213, 225, 1); /* tailwind border-gray-300 */
+  font-size: 0.875rem; /* text-sm */
+  padding: 0.25rem 0.5rem; /* px-2 py-1 */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 240px;
+  vertical-align: top; /* ensure rows expand to fit cell content */
+}
+
+/* Make item name column expand and wrap (use by adding class="item-name" to th/td) */
+.item-name,
+th.item-name,
+td.item-name {
+  white-space: normal;
+  overflow: visible;
+  text-overflow: clip;
+  max-width: none;
+  word-break: break-word;
+  overflow-wrap: anywhere; /* allow long words/URLs to wrap */
+  line-height: 1.3;
+  vertical-align: top;
+}
+
+th {
+  background-color: rgba(243, 244, 246, 1); /* tailwind bg-gray-100 */
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  background-clip: padding-box; /* prevents bleed when sticky */
+}
+
+/* Excel colors */
+.stock {
+  background-color: #fff2cc; /* Excel yellow */
+}
+
+.otw {
+  background-color: #d9ead3; /* Excel green */
+}
