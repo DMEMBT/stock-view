@@ -9,15 +9,22 @@ export default function SelectedRowPage() {
   const [payload, setPayload] = useState<{ headers: string[]; row: unknown; topRow?: unknown[] } | null>(null);
 
   useEffect(() => {
+    let t: number | undefined;
     try {
       const raw = typeof window !== "undefined" ? sessionStorage.getItem("selectedRow") : null;
       if (raw) {
         const parsed = JSON.parse(raw);
-        setPayload(parsed);
+        // schedule the update asynchronously to avoid synchronous setState in effect
+        t = window.setTimeout(() => setPayload(parsed), 0);
+      } else {
+        t = window.setTimeout(() => setPayload(null), 0);
       }
     } catch (e) {
-      setPayload(null);
+      t = window.setTimeout(() => setPayload(null), 0);
     }
+    return () => {
+      if (t !== undefined) clearTimeout(t);
+    };
   }, [params?.id]);
 
   if (!payload) {
