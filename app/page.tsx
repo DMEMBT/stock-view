@@ -24,6 +24,7 @@ async function getSheetData(): Promise<Record<string, unknown>[]> {
 
   const response = await fetch(csvUrl, { cache: 'no-store' });
   const text = await response.text();
+  // console.log(text.slice(0, 1000)); // Log first 200 characters for debugging
 
   // If server returned HTML (a sheet page) instead of CSV, give a helpful error
   const contentType = response.headers.get('content-type') || '';
